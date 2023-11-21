@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Stage 4: Build Docker image
-                    bat 'docker build -t fataddaimg .'
+                    bat 'docker push ganeshtammalala/lab_fat:tagname'
                 }
             }
         }
