@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    
+    tools {
+        maven 'MAVEN_HOME'
+    }
 
     stages {
         stage('Checkout') {
@@ -10,21 +14,27 @@ pipeline {
                 }
             }
         }
-
+        
+            stage('Clone Code') {
+            steps {
+                  // Stage 2: Clone code from GitHub
+                git 'https://github.com/shruti2025/fat.git'
+                echo 'Data Cloned Successfully'
+            }
+        }
         stage('Build Project') {
             steps {
-                script {
-                    // Stage 2: Build Maven project
-                    sh 'mvn clean install'
-                }
+                // Stage 3: Build Maven project
+                bat 'mvn install'
+                echo 'Project build successfully'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Stage 3: Build Docker image
-                    sh 'docker build -t your-image-name .'
+                    // Stage 4: Build Docker image
+                    sh 'docker build -t fataddaimg .'
                 }
             }
         }
@@ -32,8 +42,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Stage 4: Push Docker image to repository
-                    sh 'docker push your-image-name'
+                    // Stage 5: Push Docker image to repository
+                    sh 'docker push fataddaimg'
                 }
             }
         }
@@ -41,7 +51,7 @@ pipeline {
         stage('Handle Errors') {
             steps {
                 script {
-                    // Stage 5: Handle errors
+                    // Stage 6: Handle errors
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         error 'Build failed! Check the logs for details.'
                     }
@@ -49,4 +59,10 @@ pipeline {
             }
         }
     }
+    
+    triggers {
+        cron('*/1 * * * *')
+    }
+    
+    
 }
