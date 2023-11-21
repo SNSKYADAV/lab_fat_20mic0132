@@ -18,7 +18,7 @@ pipeline {
             stage('Clone Code') {
             steps {
                   // Stage 2: Clone code from GitHub
-                git 'https://github.com/shruti2025/fat.git'
+                git 'https://github.com/SNSKYADAV/lab_fat_20mic0132.git'
                 echo 'Data Cloned Successfully'
             }
         }
