@@ -43,10 +43,11 @@ pipeline {
             steps {
                 script {
                     // Stage 5: Push Docker image to repository
-                    sh 'docker push fataddaimg'
+                        bat 'docker push fataddaimg'
+                    }
                 }
             }
-        }
+
 
         stage('Handle Errors') {
             steps {
